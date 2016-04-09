@@ -5,20 +5,44 @@
 	<link rel="stylesheet" href="css/bootstrap.min.css" type = "text/css"/>
 	<meta name="viewport" content = "width=device-width, initial-scale=1.0">
 </head>
-<body class="body" style="background-color:#FF0000">
-	<canvas id="ctx" width="300"height="480" style="border:1px solid #000000;"></canvas>
+<body class="body" style="background-color:#FFFFFF">
+	<canvas id="ctx" width="300"height="490" style="border:1px solid #000000;"></canvas>
 
 </body>
 
 </html>
 <script>
 	var ctx = document.getElementById("ctx").getContext("2d");
-
-	ctx.font = '30px Arial';
+	var ScreenType = 1;
+	var WIDTH = 300;
+	var HEIGHT = 490;
+	var mouseX = 0;
+	var mouseY = 0;
 	ctx.globalAlpha = 0.5;
+	ctx.font = '30px Arial';
 
-	ctx.fillText('Hello',50,50);
-	ctx.fillRect(50,50,100,100);
-	ctx.clearRect(75,75,100,100);
+	document.onmousemove = function(mouse){
+		mouseX = mouse.clientX
+		mouseY = mouse.clientY
+	}
+
+	update = function(){
+		ctx.clearRect(0,0,WIDTH,HEIGHT);
+		if(ScreenType == 1){
+			ctx.fillStyle = 'red';
+			ctx.fillRect(0,0,WIDTH,HEIGHT);
+			ctx.fillStyle = 'darkblue';
+			ctx.fillRect(0,0,WIDTH,40);
+			ctx.fillStyle = 'lightblue';
+			ctx.fillRect(0,50,WIDTH,100);
+			ctx.fillStyle = 'lightblue';
+			ctx.fillRect(0,160,WIDTH,110);
+			ctx.fillStyle = 'lightblue';
+			ctx.fillRect(0,280,WIDTH,120);
+			ctx.fillStyle = 'black';
+			ctx.fillText('YoeYoe! App',10,29);
+		}
+	}
+	setInterval(update,40);
 
 </script>
