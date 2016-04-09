@@ -21,6 +21,37 @@
 	ctx.globalAlpha = 0.5;
 	ctx.font = '30px Arial';
 
+
+	document.onclick = function(mouse){
+		if(mouseX >= 0){
+			if(mouseX <= 90){
+				if(mouseY >= HEIGHT-40){
+					if(mouseY <= HEIGHT){
+						ScreenType = 1;
+					}
+				}
+			}
+		}
+		if(mouseX >= 100){
+			if(mouseX <= 190){
+				if(mouseY >= HEIGHT-40){
+					if(mouseY <= HEIGHT){
+						ScreenType = 2;
+					}
+				}
+			}
+		}
+		if(mouseX >= 200){
+			if(mouseX <= 290){
+				if(mouseY >= HEIGHT-40){
+					if(mouseY <= HEIGHT){
+						ScreenType = 3;
+					}
+				}
+			}
+		}
+	}
+
 	document.onmousemove = function(mouse){
 		mouseX = mouse.clientX
 		mouseY = mouse.clientY
@@ -48,14 +79,48 @@
 			// Buttons
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
-			ctx.fillText('Home',5,HEIGHT-10)
-			ctx.fillRect(90,450,10,HEIGHT)
-			ctx.fillText('Chats',105,HEIGHT-10)
-			ctx.fillRect(190,450,10,HEIGHT)
-			ctx.fillText('Option',205,HEIGHT-10)
-			ctx.fillRect(190,450,10,HEIGHT)
+
+			ctx.fillText('Home',5,HEIGHT-10);
+			ctx.fillRect(90,450,10,HEIGHT);
+
+			ctx.fillText('Chats',105,HEIGHT-10);
+			ctx.fillRect(190,450,10,HEIGHT);
+
+			ctx.fillText('Option',205,HEIGHT-10);
 
 
+		}
+
+		if(ScreenType == 2){
+			// Buttons
+			ctx.fillStyle = 'black';
+			ctx.fillRect(0,450,WIDTH,HEIGHT)
+			ctx.fillStyle = 'black';
+			ctx.font = '30px Arial';
+
+			ctx.fillText('Home',5,HEIGHT-10);
+			ctx.fillRect(90,450,10,HEIGHT);
+
+			ctx.fillText('Chats',105,HEIGHT-10);
+			ctx.fillRect(190,450,10,HEIGHT);
+
+			ctx.fillText('Option',205,HEIGHT-10);
+		}
+
+		if(ScreenType == 3){
+			// Buttons
+			ctx.fillStyle = 'black';
+			ctx.fillRect(0,450,WIDTH,HEIGHT)
+			ctx.fillStyle = 'black';
+			ctx.font = '30px Arial';
+
+			ctx.fillText('Home',5,HEIGHT-10);
+			ctx.fillRect(90,450,10,HEIGHT);
+
+			ctx.fillText('Chats',105,HEIGHT-10);
+			ctx.fillRect(190,450,10,HEIGHT);
+
+			ctx.fillText('Option',205,HEIGHT-10);
 		}
 	}
 	setInterval(update,40);
