@@ -55,6 +55,33 @@
 	document.onmousemove = function(mouse){
 		mouseX = mouse.clientX
 		mouseY = mouse.clientY
+		if(mouseX >= 0){
+			if(mouseX <= 90){
+				if(mouseY >= HEIGHT-40){
+					if(mouseY <= HEIGHT){
+						ScreenType = 1;
+					}
+				}
+			}
+		}
+		if(mouseX >= 100){
+			if(mouseX <= 190){
+				if(mouseY >= HEIGHT-40){
+					if(mouseY <= HEIGHT){
+						ScreenType = 2;
+					}
+				}
+			}
+		}
+		if(mouseX >= 200){
+			if(mouseX <= 290){
+				if(mouseY >= HEIGHT-40){
+					if(mouseY <= HEIGHT){
+						ScreenType = 3;
+					}
+				}
+			}
+		}
 	}
 
 	update = function(){
