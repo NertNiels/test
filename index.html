@@ -21,40 +21,29 @@
 	ctx.globalAlpha = 0.5;
 	ctx.font = '30px Arial';
 
-
-	document.onclick = function(mouse){
-		if(mouseX >= 0){
-			if(mouseX <= 90){
-				if(mouseY >= HEIGHT-40){
-					if(mouseY <= HEIGHT){
-						ScreenType = 1;
-					}
-				}
-			}
-		}
-		if(mouseX >= 100){
-			if(mouseX <= 190){
-				if(mouseY >= HEIGHT-40){
-					if(mouseY <= HEIGHT){
-						ScreenType = 2;
-					}
-				}
-			}
-		}
-		if(mouseX >= 200){
-			if(mouseX <= 290){
-				if(mouseY >= HEIGHT-40){
-					if(mouseY <= HEIGHT){
-						ScreenType = 3;
-					}
-				}
-			}
-		}
+	var English = {
+		Home:'Home',
+		Chats:'Chats',
+		Option:'Option',
+		Title:'YoeYoe! App',
+		Language:'Language',
 	}
+
+	var Dutch = {
+		Home:'Thuis',
+		Chats:'Praat',
+		Option:'Instel.',
+		Title:'YoeYoe! App',
+		Language:'Taal',
+	}
+
+	var Language = English
+
 
 	document.onmousemove = function(mouse){
 		mouseX = mouse.clientX
 		mouseY = mouse.clientY
+		console.log(mouseX, mouseY)
 		if(mouseX >= 0){
 			if(mouseX <= 90){
 				if(mouseY >= HEIGHT-40){
@@ -78,6 +67,26 @@
 				if(mouseY >= HEIGHT-40){
 					if(mouseY <= HEIGHT){
 						ScreenType = 3;
+					}
+				}
+			}
+		}
+		if(ScreenType == 3){
+			if(mouseX >= 0){
+				if(mouseX <= 139){
+					if(mouseY >= 110){
+						if(mouseY <= 160){
+							Language = Dutch;
+						}
+					}
+				}
+			}
+			if(mouseX >= 140){
+				if(mouseX <= 300){
+					if(mouseY >= 110){
+						if(mouseY <= 160){
+							Language = English;
+						}
 					}
 				}
 			}
@@ -99,7 +108,7 @@
 			ctx.fillStyle = 'lightblue';
 			ctx.fillRect(0,280,WIDTH,120);
 			ctx.fillStyle = 'black';
-			ctx.fillText('YoeYoe! App',10,29);
+			ctx.fillText(Language.Title,10,29);
 			ctx.fillStyle = 'black';
 			ctx.fillRect(0,450,WIDTH,HEIGHT)
 
@@ -107,31 +116,38 @@
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
 
-			ctx.fillText('Home',5,HEIGHT-10);
+			ctx.fillText(Language.Home,5,HEIGHT-10);
 			ctx.fillRect(90,450,10,HEIGHT);
 
-			ctx.fillText('Chats',105,HEIGHT-10);
+			ctx.fillText(Language.Chats,105,HEIGHT-10);
 			ctx.fillRect(190,450,10,HEIGHT);
 
-			ctx.fillText('Option',205,HEIGHT-10);
+			ctx.fillText(Language.Option,205,HEIGHT-10);
 
 
 		}
 
 		if(ScreenType == 2){
+
+
 			// Buttons
 			ctx.fillStyle = 'black';
 			ctx.fillRect(0,450,WIDTH,HEIGHT)
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
 
-			ctx.fillText('Home',5,HEIGHT-10);
+			ctx.fillStyle = 'darkblue';
+			ctx.fillRect(0,0,WIDTH,40);
+			ctx.fillStyle = 'black';
+			ctx.fillText(Language.Title,10,29);
+
+			ctx.fillText(Language.Home,5,HEIGHT-10);
 			ctx.fillRect(90,450,10,HEIGHT);
 
-			ctx.fillText('Chats',105,HEIGHT-10);
+			ctx.fillText(Language.Chats,105,HEIGHT-10);
 			ctx.fillRect(190,450,10,HEIGHT);
 
-			ctx.fillText('Option',205,HEIGHT-10);
+			ctx.fillText(Language.Option,205,HEIGHT-10);
 		}
 
 		if(ScreenType == 3){
@@ -141,13 +157,23 @@
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
 
-			ctx.fillText('Home',5,HEIGHT-10);
+			ctx.fillStyle = 'darkblue';
+			ctx.fillRect(0,0,WIDTH,40);
+			ctx.fillStyle = 'black';
+			ctx.fillText(Language.Title,10,29);
+
+
+			ctx.fillText(Language.Language+":",10,90)
+			ctx.fillText('Dutch',10,140);
+			ctx.fillText('English',140,140);
+
+			ctx.fillText(Language.Home,5,HEIGHT-10);
 			ctx.fillRect(90,450,10,HEIGHT);
 
-			ctx.fillText('Chats',105,HEIGHT-10);
+			ctx.fillText(Language.Chats,105,HEIGHT-10);
 			ctx.fillRect(190,450,10,HEIGHT);
 
-			ctx.fillText('Option',205,HEIGHT-10);
+			ctx.fillText(Language.Option,205,HEIGHT-10);
 		}
 	}
 	setInterval(update,40);
