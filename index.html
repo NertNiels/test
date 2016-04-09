@@ -28,9 +28,10 @@
 
 	update = function(){
 		ctx.clearRect(0,0,WIDTH,HEIGHT);
+		ctx.fillStyle = 'red';
+		ctx.fillRect(0,0,WIDTH,HEIGHT);
 		if(ScreenType == 1){
-			ctx.fillStyle = 'red';
-			ctx.fillRect(0,0,WIDTH,HEIGHT);
+			// Main Setup
 			ctx.fillStyle = 'darkblue';
 			ctx.fillRect(0,0,WIDTH,40);
 			ctx.fillStyle = 'lightblue';
@@ -41,6 +42,20 @@
 			ctx.fillRect(0,280,WIDTH,120);
 			ctx.fillStyle = 'black';
 			ctx.fillText('YoeYoe! App',10,29);
+			ctx.fillStyle = 'black';
+			ctx.fillRect(0,450,WIDTH,HEIGHT)
+
+			// Buttons
+			ctx.fillStyle = 'black';
+			ctx.font = '30px Arial';
+			ctx.fillText('Home',5,HEIGHT-10)
+			ctx.fillRect(90,450,10,HEIGHT)
+			ctx.fillText('Chats',105,HEIGHT-10)
+			ctx.fillRect(190,450,10,HEIGHT)
+			ctx.fillText('Option',205,HEIGHT-10)
+			ctx.fillRect(190,450,10,HEIGHT)
+
+
 		}
 	}
 	setInterval(update,40);
