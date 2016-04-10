@@ -13,16 +13,17 @@
 <script>
 	var ctx = document.getElementById("ctx").getContext("2d");
 	var ScreenType = 1;
-	var WIDTH = 300;
-	var HEIGHT = 490;
 	var mouseX = 0;
 	var mouseY = 0;
-	ctx.globalAlpha = 0.5;
 	ctx.font = '30px Arial';
 	var deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 	var deviceHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
 	document.getElementById('ctx').width = deviceWidth;
 	document.getElementById('ctx').height = deviceHeight;
+	var WIDTH = deviceWidth;
+	var HEIGHT = deviceHeight;
+
+	ctx.globalAlpha = 0.5;
 
 
 
@@ -115,17 +116,17 @@
 			ctx.fillStyle = 'black';
 			ctx.fillText(Language.Title,10,29);
 			ctx.fillStyle = 'black';
-			ctx.fillRect(0,450,WIDTH,HEIGHT)
+			ctx.fillRect(0,HEIGHT-40,WIDTH,HEIGHT)
 
 			// Buttons
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
 
 			ctx.fillText(Language.Home,5,HEIGHT-10);
-			ctx.fillRect(90,450,10,HEIGHT);
+			ctx.fillRect(90,HEIGHT-40,10,HEIGHT);
 
 			ctx.fillText(Language.Chats,105,HEIGHT-10);
-			ctx.fillRect(190,450,10,HEIGHT);
+			ctx.fillRect(190,HEIGHT-40,10,HEIGHT);
 
 			ctx.fillText(Language.Option,205,HEIGHT-10);
 
@@ -137,7 +138,7 @@
 
 			// Buttons
 			ctx.fillStyle = 'black';
-			ctx.fillRect(0,450,WIDTH,HEIGHT)
+			ctx.fillRect(0,HEIGHT-40,WIDTH,HEIGHT)
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
 
@@ -147,10 +148,10 @@
 			ctx.fillText(Language.Title,10,29);
 
 			ctx.fillText(Language.Home,5,HEIGHT-10);
-			ctx.fillRect(90,450,10,HEIGHT);
+			ctx.fillRect(90,HEIGHT-40,10,HEIGHT);
 
 			ctx.fillText(Language.Chats,105,HEIGHT-10);
-			ctx.fillRect(190,450,10,HEIGHT);
+			ctx.fillRect(190,HEIGHT-40,10,HEIGHT);
 
 			ctx.fillText(Language.Option,205,HEIGHT-10);
 		}
@@ -158,7 +159,7 @@
 		if(ScreenType == 3){
 			// Buttons
 			ctx.fillStyle = 'black';
-			ctx.fillRect(0,450,WIDTH,HEIGHT)
+			ctx.fillRect(0,HEIGHT-40,WIDTH,HEIGHT)
 			ctx.fillStyle = 'black';
 			ctx.font = '30px Arial';
 
@@ -173,10 +174,10 @@
 			ctx.fillText('English',140,140);
 
 			ctx.fillText(Language.Home,5,HEIGHT-10);
-			ctx.fillRect(90,450,10,HEIGHT);
+			ctx.fillRect(90,HEIGHT-40,10,HEIGHT);
 
 			ctx.fillText(Language.Chats,105,HEIGHT-10);
-			ctx.fillRect(190,450,10,HEIGHT);
+			ctx.fillRect(190,HEIGHT-40,10,HEIGHT);
 
 			ctx.fillText(Language.Option,205,HEIGHT-10);
 		}
