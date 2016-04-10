@@ -19,6 +19,12 @@
 	var mouseY = 0;
 	ctx.globalAlpha = 0.5;
 	ctx.font = '30px Arial';
+	var deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+	var deviceHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
+	document.getElementById('ctx').width = deviceWidth;
+	document.getElementById('ctx').height = deviceHeight;
+
+
 
 	var English = {
 		Home:'Home',
