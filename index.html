@@ -18,10 +18,10 @@
 	ctx.font = '30px Arial';
 	var deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
 	var deviceHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-	document.getElementById('ctx').width = deviceWidth;
-	document.getElementById('ctx').height = deviceHeight;
-	var WIDTH = deviceWidth;
-	var HEIGHT = deviceHeight;
+	var WIDTH = deviceWidth - 15;
+	var HEIGHT = deviceHeight - 22;
+	document.getElementById('ctx').width = WIDTH;
+	document.getElementById('ctx').height = HEIGHT;
 
 	ctx.globalAlpha = 0.5;
 
