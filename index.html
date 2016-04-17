@@ -1,191 +1,116 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>YoeYoe!</title>
-	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+	<title>YoeYoe Game</title>
+	<style>
+		#ctx {
+			margin: -9px;
+			border: 1px #000 solid;
+		}
+
+		@media screen and (max-width:5000px) {
+			#ctx{
+				width:100%;
+			}
+		}
+	</style>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="body" style="background-color:#FFFFFF">
-	<canvas id="ctx" width="300"height="490" style="border:1px solid #000000;"></canvas>
-
+<body>
+	<canvas id="ctx" width="640" height="480"></canvas>
 </body>
-
-</html>
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
-	var ctx = document.getElementById("ctx").getContext("2d");
-	var ScreenType = 1;
-	var mouseX = 0;
-	var mouseY = 0;
-	ctx.font = '30px Arial';
-	var deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-	var deviceHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height;
-	var WIDTH = deviceWidth - 15;
-	var HEIGHT = deviceHeight - 22;
+	var ctx = document.getElementById("ctx"),
+		Context = ctx.getContext("2d"),
+		deviceWidth = (window.innerWidth > 0) ? window.innerWidth : screen.width,
+		deviceHeight = (window.innerHeight > 0) ? window.innerHeight : screen.height,
+		WIDTH = deviceWidth - 4,
+		HEIGHT = deviceHeight - 7,
+		Walk = -50
 	document.getElementById('ctx').width = WIDTH;
 	document.getElementById('ctx').height = HEIGHT;
 
-	ctx.globalAlpha = 0.5;
-
-	if(WIDTH <= 540){
-		ctx.font = '20px Arial'
+	var drawRect = function(x1, y1, x2, y2, color) {
+		Context.beginPath();
+		Context.rect(x1, y1, x2, y2);
+		Context.fillStyle = color;
+		Context.fill();
 	}
 
+	var Sprite = function(filename, is_pattern) {
+		this.image = null
+		this.pattern = null
+		this.TO_RADIANS = Math.PI/180;
 
+		if(filename != undefined && filename != "" && filename != null) {
+			this.image = new Image();
+			this.image.src = filename;
+			if(is_pattern) {
+				this.pattern = Context.createPattern(this.image, 'repeat');
+			}
+		} else {
+			alert("Unable to load file!");
+		}
 
-	var English = {
-		Home:'Home',
-		Chats:'Chats',
-		Option:'Option',
-		Title:'YoeYoe! App',
-		Language:'Language',
-	}
-
-	var Dutch = {
-		Home:'Thuis',
-		Chats:'Praat',
-		Option:'Instel.',
-		Title:'YoeYoe! App',
-		Language:'Taal',
-	}
-
-	var Language = English
-
-
-	document.onmousemove = function(mouse){
-		mouseX = mouse.clientX
-		mouseY = mouse.clientY
-		console.log(mouseX, mouseY)
-		if(mouseX >= 0){
-			if(mouseX <= 90){
-				if(mouseY >= HEIGHT-40){
-					if(mouseY <= HEIGHT){
-						ScreenType = 1;
-					}
-				}
+		this.draw = function(x, y, w, h) {
+			if(this.pattern != null) {
+				Context.fillStyle = this.pattern;
+				Context.fillRect(x, y, w, h);
+			} else {
+					Context.drawImage(this.image, x, y, w ,h);
 			}
 		}
-		if(mouseX >= 100){
-			if(mouseX <= 190){
-				if(mouseY >= HEIGHT-40){
-					if(mouseY <= HEIGHT){
-						ScreenType = 2;
-					}
-				}
-			}
-		}
-		if(mouseX >= 200){
-			if(mouseX <= 290){
-				if(mouseY >= HEIGHT-40){
-					if(mouseY <= HEIGHT){
-						ScreenType = 3;
-					}
-				}
-			}
-		}
-		if(ScreenType == 3){
-			if(mouseX >= 0){
-				if(mouseX <= 139){
-					if(mouseY >= 110){
-						if(mouseY <= 160){
-							Language = Dutch;
-						}
-					}
-				}
-			}
-			if(mouseX >= 140){
-				if(mouseX <= 300){
-					if(mouseY >= 110){
-						if(mouseY <= 160){
-							Language = English;
-						}
-					}
-				}
-			}
+		this.rotate = function(x, y, angle) {
+			Context.save();
+			Context.translate(x, y);
+			Context.rotate(angle * this.TO_RADIANS);
+			Context.drawImage(this.image, -(this.image.width/2), -(this.image.height/2));
+			Context.restore()
 		}
 	}
 
-	update = function(){
-		ctx.clearRect(0,0,WIDTH,HEIGHT);
-		ctx.fillStyle = 'red';
-		ctx.fillRect(0,0,WIDTH,HEIGHT);
-		if(ScreenType == 1){
-			// Main Setup
-			ctx.fillStyle = 'darkblue';
-			ctx.fillRect(0,0,WIDTH,40);
-			ctx.fillStyle = 'lightblue';
-			ctx.fillRect(0,50,WIDTH,100);
-			ctx.fillStyle = 'lightblue';
-			ctx.fillRect(0,160,WIDTH,110);
-			ctx.fillStyle = 'lightblue';
-			ctx.fillRect(0,280,WIDTH,120);
-			ctx.fillStyle = 'black';
-			ctx.fillText(Language.Title,10,29);
-			ctx.fillStyle = 'black';
-			ctx.fillRect(0,HEIGHT-40,WIDTH,HEIGHT)
+	$(document).ready(function() {
 
-			// Buttons
-			ctx.fillStyle = 'black';
-			ctx.font = '30px Arial';
+		var BACKGROUND = "Backgrounds/Default.png";
+		var GROUND = "Ground/Default.png";
+		var WATER1 = "Animations/Water Default/water1.png",
+			WATER2 = "Animations/Water Default/water2.png",
+			WATER3 = "Animations/Water Default/water3.png",
+			WATER = WATER1,
+			WaterGIF = 0
 
-			ctx.fillText(Language.Home,5,HEIGHT-10);
-			ctx.fillRect(90,HEIGHT-40,10,HEIGHT);
+		var BackGround = new Sprite(BACKGROUND, false),
+			BackWidth = (HEIGHT/100)*600
+			BackPoss = (BackWidth/4)-(BackWidth/2)+Walk;
+		var Ground = new Sprite(GROUND, false),
+			GroundWidth = (HEIGHT/100)*600,
+			GroundPoss = (GroundWidth/4)-(GroundWidth/2)+Walk;
+		var Water = new Sprite(WATER, false),
+			WaterWidth = (HEIGHT/100)*600,
+			WaterPoss = (WaterWidth/4)-(WaterWidth/2)+Walk;
 
-			ctx.fillText(Language.Chats,105,HEIGHT-10);
-			ctx.fillRect(190,HEIGHT-40,10,HEIGHT);
+		setInterval(function() {
+			Context.clearRect(0, 0, WIDTH, HEIGHT)
 
-			ctx.fillText(Language.Option,205,HEIGHT-10);
+			BackGround.draw(BackPoss, 0, BackWidth, HEIGHT);
+			Ground.draw(GroundPoss, 0, GroundWidth, HEIGHT);
+			Water.draw(WaterPoss, 0, WaterWidth, HEIGHT);
+			WaterGIF += 1;
+			if(WaterGIF == 5) {
+				WATER = WATER2;
+			}
+			if(WaterGIF == 10) {
+				WATER = WATER3;
+			}
+			if(WaterGIF == 15) {
+				WATER = WATER1
+				WaterGIF = 0
+			}
 
-
-		}
-
-		if(ScreenType == 2){
-
-
-			// Buttons
-			ctx.fillStyle = 'black';
-			ctx.fillRect(0,HEIGHT-40,WIDTH,HEIGHT)
-			ctx.fillStyle = 'black';
-			ctx.font = '30px Arial';
-
-			ctx.fillStyle = 'darkblue';
-			ctx.fillRect(0,0,WIDTH,40);
-			ctx.fillStyle = 'black';
-			ctx.fillText(Language.Title,10,29);
-
-			ctx.fillText(Language.Home,5,HEIGHT-10);
-			ctx.fillRect(90,HEIGHT-40,10,HEIGHT);
-
-			ctx.fillText(Language.Chats,105,HEIGHT-10);
-			ctx.fillRect(190,HEIGHT-40,10,HEIGHT);
-
-			ctx.fillText(Language.Option,205,HEIGHT-10);
-		}
-
-		if(ScreenType == 3){
-			// Buttons
-			ctx.fillStyle = 'black';
-			ctx.fillRect(0,HEIGHT-40,WIDTH,HEIGHT)
-			ctx.fillStyle = 'black';
-			ctx.font = '30px Arial';
-
-			ctx.fillStyle = 'darkblue';
-			ctx.fillRect(0,0,WIDTH,40);
-			ctx.fillStyle = 'black';
-			ctx.fillText(Language.Title,10,29);
+		}, 40)
 
 
-			ctx.fillText(Language.Language+":",10,90)
-			ctx.fillText('Dutch',10,140);
-			ctx.fillText('English',140,140);
-
-			ctx.fillText(Language.Home,5,HEIGHT-10);
-			ctx.fillRect(90,HEIGHT-40,10,HEIGHT);
-
-			ctx.fillText(Language.Chats,105,HEIGHT-10);
-			ctx.fillRect(190,HEIGHT-40,10,HEIGHT);
-
-			ctx.fillText(Language.Option,205,HEIGHT-10);
-		}
-	}
-	setInterval(update,40);
-
+	})
 </script>
+</html>
